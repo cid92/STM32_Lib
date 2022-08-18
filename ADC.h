@@ -1,7 +1,6 @@
 #ifndef ADC
 #define ADC
 #include <stdint.h>
-#include "DELAY.h"
 //******************************************************************************
 //************ ADC Library        																**************
 //************ Author: Cid Gilani																	**************

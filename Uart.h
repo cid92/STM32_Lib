@@ -1,7 +1,11 @@
 #ifndef UART
 #define UART
 #include "stm32f10x.h"
-#define BUFFSIZE 80
+#include <stdint.h>
+#include "string.h"
+#include "stdlib.h"
+#include "stdarg.h"
+#define BUFFSIZE 100
 
 extern volatile char buffTx[BUFFSIZE]; // Store the message to be transmitted  
 extern volatile char buffRx[BUFFSIZE]; // Store the received message  
@@ -23,6 +27,6 @@ typedef enum baud{
 
 //This libarary handles the data transmission and reception via UART
 void USART1_IRQHandler(void);
-extern void sendBytes(char txData[], uint8_t txLength);
+void sendBytes(char txData[], uint8_t txLength);
 void initUsart1(BAUD baudrate);
 #endif

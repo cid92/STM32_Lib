@@ -2,8 +2,8 @@
 #include "stm32f10x.h"
 
 
-volatile uint32_t adcread = 0;
-volatile uint16_t sample[2] = {0,0};
+volatile uint32_t adcread;
+volatile uint16_t sample[2];
 
 void ADC1_2_IRQHandler(void){
 	if (ADC1->SR & ADC_SR_EOC)

@@ -1,8 +1,5 @@
 #include "Uart.h"
-#include <stdint.h>
-#include "string.h"
-#include "stdlib.h"
-#include "stdarg.h"
+
 
 
 static BUFF Tx; //circular buffer for Tranmission
@@ -70,7 +67,7 @@ void sendBytes(char txData[], uint8_t txLength)
 	else { //the write index is one lap ahead of the read index 
 		Tx.space = (BUFFSIZE-Tx.tail)+Tx.head; 
 	}
-	if (txLength<=Tx.space){ //check if the buffer is full 
+	if (txLength<Tx.space){ //check if the buffer is full 
 		for (int i =0 ;i <txLength;i++)
 		{
 					if (Tx.index>=BUFFSIZE){
@@ -82,7 +79,7 @@ void sendBytes(char txData[], uint8_t txLength)
 		}
 		Tx.head += txLength;//update the index where last data is written in the buffer
 		if (Tx.head >= BUFFSIZE){ //reset the write index
-			Tx.head = 0; //update the write index 
+			Tx.head = Tx.head-BUFFSIZE; //update the write index 
 		}
 		USART1->CR1 |= USART_CR1_TXEIE; //enable TX interrupt to start sending data
 	}
@@ -95,7 +92,7 @@ void sendBytes(char txData[], uint8_t txLength)
 void initUsart1(BAUD baudrate){
 	//Initiaise UART Clock
 	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN|RCC_APB2ENR_AFIOEN|RCC_APB2ENR_USART1EN;
-	//Initiaise UART Pins
+	//Initialise UART Pins
 	GPIOA->CRH |=  GPIO_CRH_CNF9_1|GPIO_CRH_MODE9_0|GPIO_CRH_MODE9_1;
 	GPIOA->CRH &= ~(GPIO_CRH_CNF9_0);
 	GPIOA->CRH |=  GPIO_CRH_CNF10_1;

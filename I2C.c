@@ -5,6 +5,11 @@ uint8_t i2cOutput[32];
 
 //Initialise the I2C peripheral 
 void initI2C (void){
+		//Initialise I2C Clock
+		RCC->APB2ENR |= RCC_APB2ENR_IOPBEN|RCC_APB2ENR_AFIOEN; 
+		RCC->APB1ENR |=RCC_APB1ENR_I2C1EN;
+		//Initialise the clock for DMA1
+		RCC->AHBENR |= RCC_AHBENR_DMA1EN;
 		//Initialise I2C1 
 		I2C1->CR1 = 0UL;
 		I2C1->CR2 = 0UL;

@@ -23,3 +23,4 @@ uint8_t i2cReadAByte(uint8_t device_addr, uint8_t reg_addr);
 void i2cReadBytes(uint8_t device_addr, uint8_t reg_addr,uint8_t dataSize);
 
 #endif
+

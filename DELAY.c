@@ -1,16 +1,25 @@
 #include "DELAY.h"
-#include "stm32f10x.h"
 
-static volatile int	msTicks;
-static volatile int usTicks;
+
+static volatile uint32_t	msTicks;
+static volatile uint32_t usTicks;
+
 
 void SysTick_Handler(void) {
 	msTicks++;
+
 }
 void TIM2_IRQHandler(void){
 	TIM2->SR &= ~(TIM_SR_UIF); //clear the timer interrupt flag 
 	usTicks++;
+
 }
+
+uint32_t millis(void) {
+	return msTicks;
+}
+
+
 void initMilliDelay(void)
 {
 	// Initialise SysTick timer
@@ -28,14 +37,16 @@ void initMicroDelay(void)
 	TIM2->EGR |= TIM_EGR_UG;
 	NVIC_EnableIRQ(TIM2_IRQn); 
 }
-void delayMs(int time_delay){
-	msTicks = 0;
-	while (msTicks <time_delay);
+
+void delayMs(uint32_t time_delay){
+	uint32_t prevTicks = msTicks;
+	while (msTicks-prevTicks <time_delay);
+	
 }
-void delayUs(int time_delay){
+
+void delayUs(uint32_t time_delay){
 	TIM2->CR1 |= TIM_CR1_CEN; //enable the the timer 
 	usTicks = 0;
 	while (usTicks <time_delay);
-	
 	TIM2->CR1 &= ~(TIM_CR1_CEN); //disable the timer
 }

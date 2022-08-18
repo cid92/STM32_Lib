@@ -1,8 +1,5 @@
 #include "PRINT_MSG.h"
-#include <stdint.h>
-#include "string.h"
-#include "stdlib.h"
-#include "stdarg.h"
+
 
 void echoPrintMsg(void)
 {
@@ -20,6 +17,7 @@ void printMsg(char *msg , ...)
 	char buff[BUFFSIZE];
 	uint8_t txLen = vsprintf(buff, msg, args);
 	sendBytes(buff,txLen);
+	
 }
 
 /*
