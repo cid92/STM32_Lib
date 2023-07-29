@@ -5,23 +5,11 @@
 #include <stdbool.h>
 #include "Uart.h"
 #include "I2C.h"
-
+#include "IMU_DEFINITION.h"
 #define COMPASS_ADDR 0x3C
 
 /* All extern global variables*/
 extern uint8_t i2cOutput[32];
-
-
-typedef struct imu{
-	
-	uint8_t *ctrlReg;
-	uint8_t *regStatus;
-	int16_t	*dataX;
-	int16_t	*dataY;
-	int16_t	*dataZ;
-	int16_t temp;
-	
-} imu;
 
 extern imu magno;
 
@@ -107,9 +95,9 @@ uint8_t isAN4602Overun(void);
 
 /*** Configure settings ***/
 void setAN4602Scale(uint8_t scaleSet); // reg1
-void setAN4602OPMode(uint8_t xySet, uint8_t zSet); //reg1 and reg4
+void setAN4602OPowerMode(uint8_t xySet, uint8_t zSet); //reg1 and reg4
 void setAN4602DOR(uint8_t opSet); // reg1 
-void setAN4602MM(uint8_t measMode); // reg3
+void setAN4602MeasMode(uint8_t measMode); // reg3
 
 void configN4602(void);
 

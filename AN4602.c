@@ -1,5 +1,5 @@
 #include "AN4602.h"
-
+#include "IMU_DEFINITION.h"
 
 static uint8_t ctrl_Reg [5], reg_stat;
 static int16_t x, y, z;
@@ -22,7 +22,7 @@ void setAN4602Scale(uint8_t scaleSet){
 	*(magno.ctrlReg+1) |= scaleSet;
 }
 
-void setAN4602OPMode(uint8_t xySet, uint8_t zSet){
+void setAN4602OPowerMode(uint8_t xySet, uint8_t zSet){
 	*magno.ctrlReg |= xySet;
 	*(magno.ctrlReg+3) |= zSet;
 }
@@ -33,16 +33,16 @@ void setAN4602DOR(uint8_t opSet){
 		*magno.ctrlReg |= FODR;
 		switch (opSet){ 
 			case ODR_155:
-				setAN4602OPMode(XY_ULTRA_PERF, Z_ULTRA_PERF);
+				setAN4602OPowerMode(XY_ULTRA_PERF, Z_ULTRA_PERF);
 				break;
 			case ODR_300:
-				setAN4602OPMode(XY_HIGH_PERF, Z_HIGH_PERF);
+				setAN4602OPowerMode(XY_HIGH_PERF, Z_HIGH_PERF);
 				break;
 			case ODR_560:
-				setAN4602OPMode(XY_MED_PERF, Z_MED_PERF);
+				setAN4602OPowerMode(XY_MED_PERF, Z_MED_PERF);
 				break;
 			case ODR_1000:
-				setAN4602OPMode(XY_LOW_POWER, Z_LOW_POWER);
+				setAN4602OPowerMode(XY_LOW_POWER, Z_LOW_POWER);
 				break;
 		}
 	}
@@ -52,7 +52,7 @@ void setAN4602DOR(uint8_t opSet){
 	}
 }
 
-void setAN4602MM(uint8_t measMode){
+void setAN4602MeasMode(uint8_t measMode){
 	*(magno.ctrlReg+2) |= measMode;
 }
 
